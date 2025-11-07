@@ -1,0 +1,20 @@
+server:
+  port: 8084
+  error:
+    include-message: always
+    include-binding-errors: always
+  
+spring:
+  application:
+    name: PaymentService
+
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: payment-group
+
+kafka:
+  topic:
+    ticket:
+      sale:
+        created: ticket.sale.created
