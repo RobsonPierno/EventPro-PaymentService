@@ -18,3 +18,6 @@ kafka:
     ticket:
       sale:
         created: ticket.sale.created
+    payment:
+      success: payment.success
+      fail: payment.fail
