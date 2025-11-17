@@ -21,3 +21,16 @@ kafka:
     payment:
       success: payment.success
       fail: payment.fail
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      paymentService:                   					# Name of the circuit breaker instance
+        registerHealthIndicator: true      					# Exposes this circuit breaker in /actuator/health
+        slidingWindowSize: 10              					# Number of calls recorded in the sliding window
+        slidingWindowType: COUNT_BASED     					# Window uses call count instead of time-based intervals
+        failureRateThreshold: 50           					# Circuit opens if the failure rate exceeds 50%
+        waitDurationInOpenState: 10s       					# Time the circuit stays OPEN before moving to HALF_OPEN
+        permittedNumberOfCallsInHalfOpenState: 3  			# Number of test calls allowed in HALF_OPEN state
+        minimumNumberOfCalls: 10           					# Minimum calls before failure rate is calculated
+        automaticTransitionFromOpenToHalfOpenEnabled: true  # Automatically move from OPEN to HALF_OPEN after wait duration
