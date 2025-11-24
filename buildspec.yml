@@ -14,7 +14,7 @@ phases:
       - echo Logging into Amazon ECR...
       - aws --version
       - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
-      - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/eventpro/sales-service
+      - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/eventpro/payment-service
       - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
 
   build:
@@ -32,7 +32,7 @@ phases:
       - echo Pushing the Docker image...
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - aws s3 cp sales-client/target/sales-client-0.0.1-SNAPSHOT.jar s3://$S3_BUCKET/maven
+      - aws s3 cp payment-client/target/payment-client-0.0.1-SNAPSHOT.jar s3://$S3_BUCKET/maven
       - echo Writing image definitions file...
       - printf '{"ImageURI":"%s"}' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
 
